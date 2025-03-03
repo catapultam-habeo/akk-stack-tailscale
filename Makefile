@@ -118,6 +118,7 @@ set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 
 install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
+	$(DOCKER) up tailscale -d
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
