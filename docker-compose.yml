@@ -28,12 +28,15 @@ services:
       - ./containers/tailscale:/config
     devices:
       - /dev/net/tun:/dev/net/tun
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9002/healthz"]
     environment:
       - TS_AUTHKEY=${TS_OAUTH_KEY}?ephemeral=true
       - TS_EXTRA_ARGS=--advertise-tags=${TS_TAGS} --reset
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_SERVE_CONFIG=/config/serve-config.json
       - TS_USERSPACE=false
+      - TS_ENABLE_HEALTH_CHECK=true
     restart: unless-stopped
 
   #############################################
@@ -68,7 +71,8 @@ services:
       - SYS_PTRACE
     cpu_shares: 900
     depends_on:
-      - tailscale
+      - tailscale:
+          condition: healthy
       - fail2ban-server
 
   #############################################
