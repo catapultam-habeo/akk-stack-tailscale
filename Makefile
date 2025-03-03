@@ -123,11 +123,6 @@ install: ##@init Install full application port-range-high=[] ip-address=[]
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
 
 	$(DOCKER) up tailscale -d
-	@echo "Waiting for Tailscale to become healthy..."
-	@until $(DOCKER) exec tailscale curl -sf http://localhost:9002/healthz > /dev/null 2>&1; do \
-		echo "Waiting for Tailscale... (If this takes too long, check your TS_OAUTH_KEY)"; \
-		sleep 5; \
-	done
 
 	$(DOCKER) build mariadb fail2ban-server fail2ban-mysqld
 	make up detached
