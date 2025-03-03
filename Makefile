@@ -120,10 +120,11 @@ install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
-	$(DOCKER) up tailscale -d
+	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
 	$(DOCKER) build mariadb fail2ban-server fail2ban-mysqld
 	make up detached
 	@assets/scripts/env-set-var.pl
+	$(DOCKER) exec eqemu-server bash -c 'while ! curl -s --head https://github.com | head -n 1 | grep -E "HTTP/[0-9\.]+ 200|HTTP/[0-9\.]+ 301|HTTP/[0-9\.]+ 302" > /dev/null; do sleep 0.5; done; sleep 5'
 	$(DOCKER) exec mariadb bash -c 'while ! mysqladmin status -uroot -p${MARIADB_ROOT_PASSWORD} -h "localhost" --silent; do sleep .5; done; sleep 5'
 	make init-strip-mysql-remote-root
 	$(DOCKER) exec eqemu-server bash -c "make install"
