@@ -25,7 +25,7 @@ services:
       - SYS_MODULE
     volumes:
       - tailscale:/var/lib/tailscale
-      - ./data/tailscale:/config
+      - ./containers/tailscale:/config
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:

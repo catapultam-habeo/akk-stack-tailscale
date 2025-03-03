@@ -1,0 +1,30 @@
+{
+    "TCP": {
+      "3306": {
+        "TCPForward": "mariadb:3306"
+      },
+      "443": {
+        "HTTPS": true
+      },
+      "8081": {
+        "HTTPS": true
+      }
+    },
+    "Web": {
+      "${TS_CERT_DOMAIN}:8081": {
+        "Handlers": {
+          "/": {
+            "Proxy": "http://peq-editor:80"
+          }
+        }
+      },
+      "${TS_CERT_DOMAIN}:443": {
+        "Handlers": {
+          "/": {
+            "Proxy": "http://127.0.0.1:3000"
+          }
+        }
+      }
+    }
+  }
+  
