@@ -24,7 +24,7 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     volumes:
-      - tailscale_state:/var/lib/tailscale
+      - tailscale:/var/lib/tailscale
       - ./data/tailscale:/config
     devices:
       - /dev/net/tun:/dev/net/tun
@@ -61,8 +61,6 @@ services:
       - PORT_RANGE_HIGH=${PORT_RANGE_HIGH}
       - TZ=${TZ:-US/Central}
     tty: true
-    networks:
-      - backend
     cap_add:
       # This is needed for running perf traces
       # - CAP_SYS_ADMIN
