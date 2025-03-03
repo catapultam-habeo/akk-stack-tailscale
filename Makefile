@@ -78,8 +78,8 @@ ifneq ($(ip-address),)
 endif
 
 IN_TS_OAUTH_KEY=${TS_OATH_KEY}
-ifneq ($(ts-oath-key),)
-	 IN_IP_ADDRESS=$(ts-oath-key)
+ifneq ($(ts-oauth-key),)
+	 IN_IP_ADDRESS=$(ts-oauth-key)
 endif
 
 #----------------------
