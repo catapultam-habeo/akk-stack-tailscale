@@ -119,6 +119,7 @@ set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
 	$(DOCKER) up tailscale -d
+	timeout 30
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
@@ -129,7 +130,7 @@ install: ##@init Install full application port-range-high=[] ip-address=[]
 	make init-strip-mysql-remote-root
 	$(DOCKER) exec eqemu-server bash -c "make install"
 	make init-peq-editor
-	make down
+	$(DOCKER) down eqemu-server mariadb
 	make up
 	make up-info
 
@@ -232,11 +233,12 @@ up: ##@docker Bring up eqemu-server and database
 	make up-info
 
 down: ##@docker Down all containers
-	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) down mariadb eqemu-server --timeout 3
+	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) down --timeout 3
 
 restart: ##@docker Restart containers
 	make down
 	make up detached
+	timeout 10
 
 #----------------------
 # env
