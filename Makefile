@@ -232,8 +232,7 @@ up: ##@docker Bring up eqemu-server and database
 	make up-info
 
 down: ##@docker Down all containers
-	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) down --timeout 3
-	$(DOCKER) up tailscale -d
+	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) down mariadb eqemu-server --timeout 3
 
 restart: ##@docker Restart containers
 	make down
