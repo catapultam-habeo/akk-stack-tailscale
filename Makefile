@@ -118,11 +118,11 @@ set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 
 install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
+	$(DOCKER) up tailscale -d
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
 	$(DOCKER) build mariadb fail2ban-server fail2ban-mysqld
-	$(DOCKER) up tailscale -d
 	make up detached
 	@assets/scripts/env-set-var.pl
 	$(DOCKER) exec mariadb bash -c 'while ! mysqladmin status -uroot -p${MARIADB_ROOT_PASSWORD} -h "localhost" --silent; do sleep .5; done; sleep 5'
