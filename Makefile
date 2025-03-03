@@ -77,6 +77,11 @@ ifneq ($(ip-address),)
 	 IN_IP_ADDRESS=$(ip-address)
 endif
 
+IN_TS_OAUTH_KEY=${TS_OATH_KEY}
+ifneq ($(ts-oath-key),)
+	 IN_IP_ADDRESS=$(ts-oath-key)
+endif
+
 #----------------------
 # services
 #----------------------
@@ -105,6 +110,7 @@ endif
 set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
+	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)
 
 #----------------------
 # Init / Install
