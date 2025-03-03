@@ -68,6 +68,7 @@ services:
       - SYS_PTRACE
     cpu_shares: 900
     depends_on:
+      - tailscale
       - fail2ban-server
 
   #############################################
