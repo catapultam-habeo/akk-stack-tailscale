@@ -228,7 +228,7 @@ watch-processes: ##@workflow Watch processes
 #----------------------
 
 up: ##@docker Bring up eqemu-server and database
-	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) up -d eqemu-server mariadb $(RUN_SERVICES)
+	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) up -d tailscale eqemu-server mariadb $(RUN_SERVICES)
 	make up-info
 
 down: ##@docker Down all containers
