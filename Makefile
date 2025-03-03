@@ -118,8 +118,6 @@ set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 
 install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
-	$(DOCKER) up tailscale -d
-	timeout 30
 	@assets/scripts/env-set-var.pl IP_ADDRESS $(IN_IP_ADDRESS)
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
@@ -130,7 +128,7 @@ install: ##@init Install full application port-range-high=[] ip-address=[]
 	make init-strip-mysql-remote-root
 	$(DOCKER) exec eqemu-server bash -c "make install"
 	make init-peq-editor
-	$(DOCKER) down eqemu-server mariadb
+	make down
 	make up
 	make up-info
 
