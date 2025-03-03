@@ -122,7 +122,7 @@ install: ##@init Install full application port-range-high=[] ip-address=[]
 	@assets/scripts/env-set-var.pl PORT_RANGE_HIGH $(IN_PORT_RANGE_HIGH)
 	@assets/scripts/env-set-var.pl TS_OAUTH_KEY $(IN_TS_OAUTH_KEY)	
 
-	$(DOCKER) up tailscale -d
+	$(DOCKER) up tailscale
 
 	$(DOCKER) build mariadb fail2ban-server fail2ban-mysqld
 	make up detached
