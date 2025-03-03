@@ -233,6 +233,7 @@ up: ##@docker Bring up eqemu-server and database
 
 down: ##@docker Down all containers
 	COMPOSE_HTTP_TIMEOUT=1000 $(DOCKER) down --timeout 3
+	$(DOCKER) up tailscale -d
 
 restart: ##@docker Restart containers
 	make down
