@@ -29,7 +29,10 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9002/healthz"]
+      test: ["CMD-SHELL", "tailscale status"]
+      interval: 1s
+      timeout: 5s
+      retries: 60
     environment:
       - TS_AUTHKEY=${TS_OAUTH_KEY}?ephemeral=true
       - TS_EXTRA_ARGS=--advertise-tags=${TS_TAGS} --reset
