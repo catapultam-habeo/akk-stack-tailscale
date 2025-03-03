@@ -118,8 +118,7 @@ set-vars: ##@env Sets var port-range-high=[] ip-address=[]
 
 install: ##@init Install full application port-range-high=[] ip-address=[]
 	$(DOCKER) pull
-	$(DOCKER) up tailscale -d
-	$(DOCKER) up tailscale -d
+	$(DOCKER) up tailscale
 	@echo "Waiting for Tailscale to become healthy..."
 	@until $(DOCKER) exec tailscale curl -sf http://localhost:9002/healthz > /dev/null 2>&1; do \
 		echo "Waiting for Tailscale... (If this takes too long, check your TS_OAUTH_KEY)"; \
