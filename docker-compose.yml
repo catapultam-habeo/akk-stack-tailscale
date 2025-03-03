@@ -71,9 +71,10 @@ services:
       - SYS_PTRACE
     cpu_shares: 900
     depends_on:
-      - tailscale:
-          condition: healthy
-      - fail2ban-server
+      tailscale:
+          condition: service_healthy
+      fail2ban-server:
+          condition: service_started
 
   #############################################
   # mariadb
